@@ -1,6 +1,6 @@
 {
-  "name": "mia-mellemrum-1",
-  "base": "/mia-mellemrum-1/",
+  "name": "mia-mellemrum-navn",
+  "base": "/mia-mellemrum-navn/",
   "private": true,
   "version": "1.0.0",
   "type": "module",
