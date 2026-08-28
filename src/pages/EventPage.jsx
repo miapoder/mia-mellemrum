@@ -28,7 +28,27 @@ export default function EventPage() {
 
   async function handleSubmit(eventSubmit) {
     eventSubmit.preventDefault();
-    console.log({ name, email, event: event.title });
+
+    const response = await fetch(`${SUPABASE_URL}/registrations`, {
+      method: "POST",
+      headers: {
+        ...headers,
+        Prefer: "return=representation",
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        status: "Ny",
+        eventTitle: event.title,
+        eventDate: event.date,
+        eventLocation: event.venues?.name,
+        event_id: eventId,
+      }),
+    });
+
+    const data = await response.json();
+
+    console.log(data);
   }
 
   if (!event) {
