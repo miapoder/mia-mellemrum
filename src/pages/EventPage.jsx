@@ -10,6 +10,8 @@ const headers = {
 export default function EventPage() {
   const { eventId } = useParams();
   const [event, setEvent] = useState(null);
+  const [error, setError] = useState(false);
+  const [retry, setRetry] = useState(0);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState(null);
@@ -17,16 +19,25 @@ export default function EventPage() {
 
   useEffect(() => {
     async function getEvent() {
-      const response = await fetch(
-        `${SUPABASE_URL}/events?id=eq.${eventId}&select=*,venues(*)`,
-        { headers },
-      );
-      const data = await response.json();
-      setEvent(data[0]);
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/events?id=eq.${eventId}&select=*,venues(*)`,
+          { headers },
+        );
+
+        if (!response.ok) {
+          throw new Error("Kunne ikke hente eventet.");
+        }
+
+        const data = await response.json();
+        setEvent(data[0]);
+      } catch {
+        setError(true);
+      }
     }
 
     getEvent();
-  }, [eventId]);
+  }, [eventId, retry]);
 
   async function handleSubmit(eventSubmit) {
     eventSubmit.preventDefault();
@@ -80,6 +91,40 @@ export default function EventPage() {
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  if (error) {
+    return (
+      <main className="event-page error-page">
+        <div className="error-content">
+          <p className="eyebrow">Fejl</p>
+
+          <h1>Eventet kunne ikke hentes</h1>
+
+          <p>
+            Der opstod en fejl, da eventet skulle hentes. Prøv igen, eller gå
+            tilbage til alle events.
+          </p>
+
+          <div className="error-actions">
+            <button
+              type="button"
+              onClick={() => {
+                setError(false);
+                setEvent(null);
+                setRetry((value) => value + 1);
+              }}
+            >
+              Prøv igen
+            </button>
+
+            <Link className="back-link" to="/">
+              ← Tilbage til events
+            </Link>
+          </div>
+        </div>
+      </main>
+    );
   }
 
   if (!event) {
