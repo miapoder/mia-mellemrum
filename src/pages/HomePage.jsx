@@ -11,6 +11,7 @@ export default function HomePage() {
   const [events, setEvents] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Alle");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getEvents() {
@@ -20,12 +21,16 @@ export default function HomePage() {
       );
       const data = await response.json();
       setEvents(data);
+      setIsLoading(false);
     }
 
     getEvents();
   }, []);
 
-  const categories = ["Alle", ...new Set(events.map((event) => event.category))];
+  const categories = [
+    "Alle",
+    ...new Set(events.map((event) => event.category)),
+  ];
 
   const filteredEvents = events.filter((event) => {
     const searchText =
@@ -41,10 +46,21 @@ export default function HomePage() {
     const formattedDate = date.toLocaleDateString("da-DK", {
       weekday: "long",
       day: "numeric",
-      month: "long"
+      month: "long",
     });
 
     return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+  }
+
+  if (isLoading) {
+    return (
+      <main className="loading-page">
+        <div className="loading-content">
+          <p className="eyebrow dark">Indlæser</p>
+          <h1>Henter events</h1>
+        </div>
+      </main>
+    );
   }
 
   return (

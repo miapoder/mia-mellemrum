@@ -83,7 +83,14 @@ export default function EventPage() {
   }
 
   if (!event) {
-    return null;
+    return (
+      <main className="event-page loading-page">
+        <div className="loading-content">
+          <p className="eyebrow">Indlæser</p>
+          <h1>Henter event</h1>
+        </div>
+      </main>
+    );
   }
 
   const date = new Date(event.date);

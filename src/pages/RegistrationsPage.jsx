@@ -10,6 +10,7 @@ const headers = {
 export default function RegistrationsPage() {
   const [registrations, setRegistrations] = useState([]);
   const [registrationCount, setRegistrationCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function getRegistrations() {
@@ -20,10 +21,22 @@ export default function RegistrationsPage() {
       const data = await response.json();
       setRegistrations(data);
       setRegistrationCount(data.length);
+      setIsLoading(false);
     }
 
     getRegistrations();
   }, []);
+
+  if (isLoading) {
+    return (
+      <main className="loading-page">
+        <div className="loading-content">
+          <p className="eyebrow dark">Indlæser</p>
+          <h1>Henter tilmeldinger</h1>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <>

@@ -917,3 +917,24 @@ select:focus {
     gap: 0.4rem;
   }
 }
+
+.loading-page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+.loading-content {
+  max-width: 700px;
+}
+
+.loading-content h1 {
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  letter-spacing: -0.065em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.loading-content .eyebrow {
+  color: var(--green);
+}
