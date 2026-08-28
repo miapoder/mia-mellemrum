@@ -12,6 +12,8 @@ export default function EventPage() {
   const [event, setEvent] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     async function getEvent() {
@@ -29,26 +31,55 @@ export default function EventPage() {
   async function handleSubmit(eventSubmit) {
     eventSubmit.preventDefault();
 
-    const response = await fetch(`${SUPABASE_URL}/registrations`, {
-      method: "POST",
-      headers: {
-        ...headers,
-        Prefer: "return=representation",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        status: "Ny",
-        eventTitle: event.title,
-        eventDate: event.date,
-        eventLocation: event.venues?.name,
-        event_id: eventId,
-      }),
-    });
+    if (!name.trim() || !email.trim()) {
+      setStatus({
+        type: "validation",
+        message: "Udfyld venligst både navn og e-mail.",
+      });
+      return;
+    }
 
-    const data = await response.json();
+    setIsSubmitting(true);
+    setStatus(null);
 
-    console.log(data);
+    try {
+      const response = await fetch(`${SUPABASE_URL}/registrations`, {
+        method: "POST",
+        headers: {
+          ...headers,
+          Prefer: "return=representation",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          status: "Ny",
+          eventTitle: event.title,
+          eventDate: event.date,
+          eventLocation: event.venues?.name,
+          event_id: eventId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Tilmeldingen kunne ikke gennemføres.");
+      }
+
+      await response.json();
+
+      setStatus({
+        type: "success",
+        message: "Du er nu tilmeldt eventet.",
+      });
+      setName("");
+      setEmail("");
+    } catch {
+      setStatus({
+        type: "error",
+        message: "Der opstod en fejl. Prøv igen.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   if (!event) {
@@ -131,7 +162,13 @@ export default function EventPage() {
               onChange={(inputEvent) => setEmail(inputEvent.target.value)}
               placeholder="dig@example.com"
             />
-            <button type="submit">Tilmeld mig</button>
+            {status && (
+              <p className={`signup-status ${status.type}`}>{status.message}</p>
+            )}
+
+            <button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Tilmelding..." : "Tilmeld mig"}
+            </button>
           </form>
         </section>
       </main>
