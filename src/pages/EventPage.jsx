@@ -54,41 +54,64 @@ export default function EventPage() {
     setStatus(null);
 
     try {
-      const response = await fetch(`${SUPABASE_URL}/registrations`, {
-        method: "POST",
-        headers: {
-          ...headers,
-          Prefer: "return=representation",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          status: "Ny",
-          eventTitle: event.title,
-          eventDate: event.date,
-          eventLocation: event.venues?.name,
-          event_id: eventId,
-        }),
-      });
+  const existingResponse = await fetch(
+    `${SUPABASE_URL}/registrations?email=eq.${encodeURIComponent(
+      email.trim(),
+    )}&event_id=eq.${eventId}&select=id`,
+    { headers },
+  );
 
-      if (!response.ok) {
-        throw new Error("Tilmeldingen kunne ikke gennemføres.");
-      }
+  if (!existingResponse.ok) {
+    throw new Error("Kunne ikke kontrollere tilmeldingen.");
+  }
 
-      await response.json();
+  const existingRegistrations = await existingResponse.json();
 
-      setStatus({
-        type: "success",
-        message: "Du er nu tilmeldt eventet.",
-      });
-      setName("");
-      setEmail("");
-    } catch {
-      setStatus({
-        type: "error",
-        message: "Der opstod en fejl. Prøv igen.",
-      });
-    } finally {
+  if (existingRegistrations.length > 0) {
+    setStatus({
+      type: "error",
+      message: "Du er allerede tilmeldt dette event.",
+    });
+    return;
+  }
+
+  const response = await fetch(`${SUPABASE_URL}/registrations`, {
+    method: "POST",
+    headers: {
+      ...headers,
+      Prefer: "return=representation",
+    },
+    body: JSON.stringify({
+      name,
+      email: email.trim(),
+      status: "Ny",
+      eventTitle: event.title,
+      eventDate: event.date,
+      eventLocation: event.venues?.name,
+      event_id: eventId,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Tilmeldingen kunne ikke gennemføres.");
+  }
+
+  await response.json();
+
+  setStatus({
+    type: "success",
+    message: "Du er nu tilmeldt eventet.",
+  });
+  setName("");
+  setEmail("");
+} catch {
+  setStatus({
+    type: "error",
+    message: "Der opstod en fejl. Prøv igen.",
+  });
+}
+
+    finally {
       setIsSubmitting(false);
     }
   }
