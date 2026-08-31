@@ -3,12 +3,7 @@ import { Link } from "react-router";
 import Footer from "../components/Footer";
 import EventCard from "../components/EventCard";
 import EventFilters from "../components/EventFilters";
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const headers = {
-  apikey: import.meta.env.VITE_SUPABASE_APIKEY,
-  "Content-Type": "application/json"
-};
+import { getEvents } from "../services/supabase";
 
 export default function HomePage() {
   const [events, setEvents] = useState([]);
@@ -17,18 +12,14 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function getEvents() {
-      const response = await fetch(
-        `${SUPABASE_URL}/events?select=*,venues(*)&order=date.asc`,
-        { headers },
-      );
-      const data = await response.json();
-      setEvents(data);
-      setIsLoading(false);
-    }
+  async function loadEvents() {
+    const data = await getEvents();
+    setEvents(data);
+    setIsLoading(false);
+  }
 
-    getEvents();
-  }, []);
+  loadEvents();
+}, []);
 
   const categories = [
     "Alle",
