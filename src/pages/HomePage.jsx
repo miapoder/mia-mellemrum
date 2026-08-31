@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import Footer from "../components/Footer";
 import EventCard from "../components/EventCard";
 import EventFilters from "../components/EventFilters";
 import { getEvents } from "../services/supabase";
@@ -98,7 +97,6 @@ export default function HomePage() {
           ))}
         </section>
       </main>
-      <Footer />
     </>
   );
 }
