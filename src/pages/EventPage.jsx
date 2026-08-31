@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const headers = {
-  apikey: import.meta.env.VITE_SUPABASE_APIKEY,
-  "Content-Type": "application/json"
-};
+import { getEvent, checkRegistration, createRegistration } from "../services/supabase";
 
 export default function EventPage() {
   const { eventId } = useParams();
@@ -18,25 +13,16 @@ export default function EventPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    async function getEvent() {
+    async function loadEvent() {
       try {
-        const response = await fetch(
-          `${SUPABASE_URL}/events?id=eq.${eventId}&select=*,venues(*)`,
-          { headers },
-        );
-
-        if (!response.ok) {
-          throw new Error("Kunne ikke hente eventet.");
-        }
-
-        const data = await response.json();
-        setEvent(data[0]);
+        const data = await getEvent(eventId);
+        setEvent(data);
       } catch {
         setError(true);
       }
     }
 
-    getEvent();
+    loadEvent();
   }, [eventId, retry]);
 
   async function handleSubmit(eventSubmit) {
@@ -54,18 +40,7 @@ export default function EventPage() {
     setStatus(null);
 
     try {
-  const existingResponse = await fetch(
-    `${SUPABASE_URL}/registrations?email=eq.${encodeURIComponent(
-      email.trim(),
-    )}&event_id=eq.${eventId}&select=id`,
-    { headers },
-  );
-
-  if (!existingResponse.ok) {
-    throw new Error("Kunne ikke kontrollere tilmeldingen.");
-  }
-
-  const existingRegistrations = await existingResponse.json();
+  const existingRegistrations = await checkRegistration(email.trim(), eventId);
 
   if (existingRegistrations.length > 0) {
     setStatus({
@@ -75,28 +50,15 @@ export default function EventPage() {
     return;
   }
 
-  const response = await fetch(`${SUPABASE_URL}/registrations`, {
-    method: "POST",
-    headers: {
-      ...headers,
-      Prefer: "return=representation",
-    },
-    body: JSON.stringify({
-      name,
-      email: email.trim(),
-      status: "Ny",
-      eventTitle: event.title,
-      eventDate: event.date,
-      eventLocation: event.venues?.name,
-      event_id: eventId,
-    }),
+  await createRegistration({
+    name,
+    email: email.trim(),
+    status: "Ny",
+    eventTitle: event.title,
+    eventDate: event.date,
+    eventLocation: event.venues?.name,
+    event_id: eventId,
   });
-
-  if (!response.ok) {
-    throw new Error("Tilmeldingen kunne ikke gennemføres.");
-  }
-
-  await response.json();
 
   setStatus({
     type: "success",
