@@ -2,7 +2,7 @@ import { Link } from "react-router";
 
 export default function EventCard({ event, formatEventDate }) {
   return (
-    <article className="event-card">
+    <Link className="event-card" to={`/events/${event.id}`}>
       <img src={event.image} alt="" />
 
       <div className="event-card-content">
@@ -17,10 +17,8 @@ export default function EventCard({ event, formatEventDate }) {
           <span>{event.venues?.name || "Ukendt sted"}</span>
         </div>
 
-        <Link className="card-link" to={`/events/${event.id}`}>
-          Læs mere
-        </Link>
+        <span className="card-link">Læs mere</span>
       </div>
-    </article>
+    </Link>
   );
 }
