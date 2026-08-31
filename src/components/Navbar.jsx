@@ -6,10 +6,15 @@ export default function Navbar() {
       <NavLink className="brand" to="/">
         mellemrum<span>.</span>
       </NavLink>
-      <div className="nav-links">
-        <NavLink to="/">Events</NavLink>
-        <NavLink to="/om">Om Mellemrum</NavLink>
-      </div>
+
+      <ul className="nav-links">
+        <li>
+          <NavLink to="/">Events</NavLink>
+        </li>
+        <li>
+          <NavLink to="/om">Om Mellemrum</NavLink>
+        </li>
+      </ul>
     </nav>
   );
 }
