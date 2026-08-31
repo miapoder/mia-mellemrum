@@ -193,12 +193,17 @@ export default function EventPage() {
                 onChange={(inputEvent) => setName(inputEvent.target.value)}
               />
             </label>
-            <span>E-mail</span>
-            <input
-              value={email}
-              onChange={(inputEvent) => setEmail(inputEvent.target.value)}
-              placeholder="dig@example.com"
-            />
+
+            <label>
+              E-mail
+              <input
+                type="email"
+                value={email}
+                onChange={(inputEvent) => setEmail(inputEvent.target.value)}
+                placeholder="dig@example.com"
+              />
+            </label>
+            
             {status && (
               <p className={`signup-status ${status.type}`}>{status.message}</p>
             )}
