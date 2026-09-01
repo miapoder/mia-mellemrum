@@ -67,7 +67,7 @@ export default function EventPage() {
   await createRegistration({
     name,
     email: email.trim(),
-    status: "Ny",
+    status: "Afventer",
     eventTitle: event.title,
     eventDate: event.date,
     eventLocation: event.venues?.name,
