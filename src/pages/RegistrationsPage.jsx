@@ -58,7 +58,11 @@ export default function RegistrationsPage() {
                     )
                   : "Ukendt dato"}
               </span>
-              <span className="status">{registration.status}</span>
+              <span
+                className={`status status-${registration.status.toLowerCase()}`}
+              >
+                {registration.status}
+              </span>
             </div>
           ))}
         </div>

@@ -511,13 +511,22 @@
 }
 
 .status {
-  background: #dff3cc;
   border-radius: 999px;
   display: inline-block;
   font-size: 0.75rem;
   font-weight: 750;
   padding: 0.35rem 0.6rem;
   text-align: center;
+}
+
+.status-afventer {
+  background: #fff0c2;
+  color: #765b00;
+}
+
+.status-tilmeldt {
+  background: #dff3cc;
+  color: #245c2a;
 }
 
 .not-found-title {
