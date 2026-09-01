@@ -2,23 +2,27 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import EventCard from "../components/EventCard";
 import EventFilters from "../components/EventFilters";
-import { getEvents } from "../services/supabase";
+import { getEvents, getRegistrations } from "../services/supabase";
 
 export default function HomePage() {
   const [events, setEvents] = useState([]);
+  const [registrations, setRegistrations] = useState([]);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Alle");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-  async function loadEvents() {
-    const data = await getEvents();
-    setEvents(data);
-    setIsLoading(false);
-  }
+    async function loadEvents() {
+      const data = await getEvents();
+      const registrationData = await getRegistrations();
 
-  loadEvents();
-}, []);
+      setEvents(data);
+      setRegistrations(registrationData);
+      setIsLoading(false);
+    }
+
+    loadEvents();
+  }, []);
 
   const categories = [
     "Alle",
@@ -88,13 +92,21 @@ export default function HomePage() {
         />
 
         <section className="event-grid">
-          {filteredEvents.map((event) => (
-            <EventCard
-              key={event.id}
-              event={event}
-              formatEventDate={formatEventDate}
-            />
-          ))}
+          {filteredEvents.map((event) => {
+            const registrationCount = registrations.filter(
+              (registration) =>
+                String(registration.event_id) === String(event.id),
+            ).length;
+
+            return (
+              <EventCard
+                key={event.id}
+                event={event}
+                formatEventDate={formatEventDate}
+                registrationCount={registrationCount}
+              />
+            );
+          })}
         </section>
       </main>
     </>

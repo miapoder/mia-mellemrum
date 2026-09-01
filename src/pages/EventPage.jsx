@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
-import { getEvent, checkRegistration, createRegistration } from "../services/supabase";
+import {
+  getEvent,
+  checkRegistration,
+  createRegistration,
+  getRegistrations,
+} from "../services/supabase";
 
 export default function EventPage() {
   const { eventId } = useParams();
@@ -11,12 +16,21 @@ export default function EventPage() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [registrationCount, setRegistrationCount] = useState(0);
 
   useEffect(() => {
     async function loadEvent() {
       try {
         const data = await getEvent(eventId);
+        const registrations = await getRegistrations();
+
         setEvent(data);
+
+        const count = registrations.filter(
+          (registration) => String(registration.event_id) === String(eventId),
+        ).length;
+
+        setRegistrationCount(count);
       } catch {
         setError(true);
       }
@@ -59,6 +73,8 @@ export default function EventPage() {
     eventLocation: event.venues?.name,
     event_id: eventId,
   });
+
+  setRegistrationCount((count) => count + 1);
 
   setStatus({
     type: "success",
@@ -138,6 +154,9 @@ export default function EventPage() {
             <p className="event-category">{event.category}</p>
             <h1>{event.title}</h1>
             <p className="lead">{event.summary}</p>
+            <p className="registration-count">
+              {registrationCount} / {event.capacity} pladser
+            </p>
             <div className="detail-list">
               <p>
                 <strong>Dato</strong>
@@ -203,7 +222,7 @@ export default function EventPage() {
                 placeholder="dig@example.com"
               />
             </label>
-            
+
             {status && (
               <p className={`signup-status ${status.type}`}>{status.message}</p>
             )}
