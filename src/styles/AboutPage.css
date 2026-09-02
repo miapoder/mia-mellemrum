@@ -1,4 +1,10 @@
 .about-header {
+  position: relative;
+  overflow: hidden;
+  color: white;
+  min-height: 64vh;
+  padding: clamp(5rem, 10vw, 9rem) var(--content-edge) 5rem;
+
   background:
     linear-gradient(
       90deg,
@@ -8,17 +14,13 @@
     ),
     url("https://images.unsplash.com/photo-1553376482-e96b68bd1e11?q=80&w=2400&auto=format&fit=crop&ixlib=rb-4.1.0")
       center / cover;
-  min-height: 68vh;
+
   display: flex;
   align-items: flex-end;
 }
 
 .about-header-content {
   max-width: 850px;
-}
-
-.about-header h1 {
-  font-size: clamp(3rem, 6vw, 6rem);
 }
 
 .about-header-content > p:last-child {
@@ -268,7 +270,7 @@
 
 @media (max-width: 620px) {
   .about-header {
-    min-height: 72vh;
+    min-height: 64vh;
   }
 
   .about-page {
