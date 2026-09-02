@@ -7,6 +7,7 @@ import {
   getRegistrations,
 } from "../services/supabase";
 import "../styles/EventPage.css";
+import "../styles/LoadingError.css";
 
 export default function EventPage() {
   const { eventId } = useParams();
