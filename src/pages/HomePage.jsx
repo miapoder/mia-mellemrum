@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import EventCard from "../components/EventCard";
 import EventFilters from "../components/EventFilters";
 import { getEvents, getRegistrations } from "../services/supabase";
