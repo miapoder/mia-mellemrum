@@ -69,3 +69,59 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(23, 63, 53, 0.12);
   outline: none;
 }
+
+.eyebrow {
+  color: var(--lime);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  margin: 0 0 1rem;
+  text-transform: uppercase;
+}
+
+.eyebrow.dark {
+  color: var(--green);
+}
+
+.page-header h1 {
+  font-size: clamp(3.2rem, 8vw, 7.5rem);
+  letter-spacing: -0.075em;
+  line-height: 0.9;
+  margin: 0;
+  max-width: 12ch;
+}
+
+.page-header {
+  background: var(--green);
+  color: white;
+  padding: 5rem var(--content-edge);
+}
+
+@media (max-width: 620px) {
+  .site-nav,
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .site-nav {
+    gap: 0.7rem;
+    padding-bottom: 0.9rem;
+    padding-top: 0.9rem;
+  }
+
+  .site-footer {
+    padding-bottom: 2rem;
+  }
+
+  .footer-top,
+  .footer-links {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+}

@@ -1,0 +1,71 @@
+.loading-page,
+.error-page {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+.loading-content,
+.error-content {
+  max-width: 700px;
+}
+
+.loading-content h1,
+.error-content h1 {
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  letter-spacing: -0.065em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.error-content h1 {
+  margin: 0 0 1.5rem;
+}
+
+.loading-content .eyebrow,
+.error-content .eyebrow {
+  color: var(--green);
+}
+
+.error-content > p:not(.eyebrow) {
+  color: #53605b;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  margin: 0 0 1.75rem;
+  max-width: 38rem;
+}
+
+.error-actions {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.error-actions button {
+  background: var(--green);
+  border: 0;
+  border-radius: 999px;
+  color: white;
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0.85rem 1.2rem;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.error-actions button:hover {
+  background: var(--lime);
+  color: var(--green);
+  transform: translateY(-2px);
+}
+
+.error-actions .back-link {
+  margin: 0;
+}
+
+@media (max-width: 620px) {
+  .error-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

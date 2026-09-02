@@ -17,6 +17,10 @@
   max-width: 850px;
 }
 
+.about-header h1 {
+  font-size: clamp(3rem, 6vw, 6rem);
+}
+
 .about-header-content > p:last-child {
   color: rgba(255, 255, 255, 0.78);
   font-size: clamp(1.1rem, 2vw, 1.35rem);
@@ -292,4 +296,8 @@
   .about-city figure {
     min-height: 400px;
   }
+  .about-audience-split,
+.about-flow-list {
+  grid-template-columns: 1fr;
+}
 }
