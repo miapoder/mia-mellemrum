@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { getRegistrations } from "../services/supabase";
+import "../styles/RegistrationsPage.css";
 
 export default function RegistrationsPage() {
   const [registrations, setRegistrations] = useState([]);

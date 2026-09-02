@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import EventCard from "../components/EventCard";
 import EventFilters from "../components/EventFilters";
 import { getEvents, getRegistrations } from "../services/supabase";
+import "../styles/HomePage.css";
 
 export default function HomePage() {
   const [events, setEvents] = useState([]);

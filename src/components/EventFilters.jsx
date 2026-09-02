@@ -1,3 +1,5 @@
+import "../styles/EventFilters.css";
+
 export default function EventFilters({
   search,
   setSearch,
