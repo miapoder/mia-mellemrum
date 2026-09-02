@@ -254,6 +254,10 @@
   text-underline-offset: 0.35rem;
 }
 
+.about-audiences .about-section-heading .audience-eyebrow {
+  color: var(--lime);
+}
+
 .about-flow-section .about-section-heading {
   padding: 0;
 }
