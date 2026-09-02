@@ -8,7 +8,7 @@
   position: relative;
   overflow: hidden;
   color: white;
-  min-height: 64vh;
+  height: 80vh;
   padding: clamp(5rem, 10vw, 9rem) var(--content-edge) 5rem;
 }
 
