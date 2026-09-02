@@ -43,14 +43,14 @@
 
 .about-page h2 {
   font-size: clamp(2.6rem, 5vw, 5rem);
-  letter-spacing: -0.06em;
+  letter-spacing: 0.0em;
   line-height: 0.95;
   margin: 0;
 }
 
 .about-page h3 {
   font-size: clamp(1.8rem, 3vw, 3rem);
-  letter-spacing: -0.045em;
+  letter-spacing: 0.0em;
   line-height: 1;
   margin: 0;
 }
@@ -192,7 +192,7 @@
 .about-flow-list strong {
   display: block;
   font-size: clamp(1.4rem, 2.5vw, 2rem);
-  letter-spacing: -0.035em;
+  letter-spacing: 0.0em;
   line-height: 1.1;
 }
 

@@ -85,7 +85,7 @@ select:focus {
 
 .page-header h1 {
   font-size: clamp(3.2rem, 8vw, 7.5rem);
-  letter-spacing: -0.075em;
+  letter-spacing: 0.0em;
   line-height: 0.9;
   margin: 0;
   max-width: 12ch;
