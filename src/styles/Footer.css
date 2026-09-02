@@ -1,34 +1,3 @@
-.filters {
-  background: rgba(255, 255, 255, 0.62);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 2fr 1fr;
-  margin-bottom: 2.5rem;
-  padding: 1rem;
-}
-
-.filters label {
-  display: grid;
-  font-size: 0.78rem;
-  font-weight: 800;
-  gap: 0.45rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.event-grid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.message {
-  background: var(--cream);
-  padding: 1rem;
-}
-
 .site-footer {
   background: #102f28;
   color: rgba(255, 255, 255, 0.72);
