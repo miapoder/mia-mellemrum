@@ -63,15 +63,24 @@ export default function HomePage() {
   return (
     <>
       <header className="hero">
-        <p className="eyebrow">Kultur i Aarhus</p>
-        <h1>Find plads til noget nyt.</h1>
-        <p className="hero-copy">
-          Koncerter, talks og workshops samlet ét sted. Find dit næste event, og
-          tilmeld dig på få minutter.
-        </p>
-        <a className="hero-link" href="#events">
-          Se kommende events ↓
-        </a>
+        <img
+          className="hero-image"
+          src="https://images.unsplash.com/photo-1595146463222-19603449c6af?q=70&w=1600&auto=format&fit=crop"
+          alt=""
+          fetchPriority="high"
+        />
+
+        <div className="hero-content">
+          <p className="eyebrow">Kultur i Aarhus</p>
+          <h1>Find plads til noget nyt.</h1>
+          <p className="hero-copy">
+            Koncerter, talks og workshops samlet ét sted. Find dit næste event,
+            og tilmeld dig på få minutter.
+          </p>
+          <a className="hero-link" href="#events">
+            Se kommende events ↓
+          </a>
+        </div>
       </header>
 
       <main id="events">
