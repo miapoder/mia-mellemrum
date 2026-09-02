@@ -49,17 +49,6 @@ export default function HomePage() {
     return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
   }
 
-  if (isLoading) {
-    return (
-      <main className="loading-page">
-        <div className="loading-content">
-          <p className="eyebrow dark">Indlæser</p>
-          <h1>Henter events</h1>
-        </div>
-      </main>
-    );
-  }
-
   return (
     <>
       <header className="hero">
@@ -100,23 +89,30 @@ export default function HomePage() {
           categories={categories}
         />
 
-        <section className="event-grid">
-          {filteredEvents.map((event) => {
-            const registrationCount = registrations.filter(
-              (registration) =>
-                String(registration.event_id) === String(event.id),
-            ).length;
+        {isLoading ? (
+          <div className="loading-content">
+            <p className="eyebrow dark">Indlæser</p>
+            <h1>Henter events...</h1>
+          </div>
+        ) : (
+          <section className="event-grid">
+            {filteredEvents.map((event) => {
+              const registrationCount = registrations.filter(
+                (registration) =>
+                  String(registration.event_id) === String(event.id),
+              ).length;
 
-            return (
-              <EventCard
-                key={event.id}
-                event={event}
-                formatEventDate={formatEventDate}
-                registrationCount={registrationCount}
-              />
-            );
-          })}
-        </section>
+              return (
+                <EventCard
+                  key={event.id}
+                  event={event}
+                  formatEventDate={formatEventDate}
+                  registrationCount={registrationCount}
+                />
+              );
+            })}
+          </section>
+        )}
       </main>
     </>
   );
