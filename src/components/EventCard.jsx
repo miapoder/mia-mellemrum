@@ -1,5 +1,14 @@
 import { Link } from "react-router";
 
+function optimizeImageUrl(url) {
+  const imageUrl = new URL(url);
+
+  imageUrl.searchParams.set("q", "70");
+  imageUrl.searchParams.set("w", "800");
+
+  return imageUrl.toString();
+}
+
 export default function EventCard({
   event,
   formatEventDate,
@@ -7,7 +16,7 @@ export default function EventCard({
 }) {
   return (
     <Link className="event-card" to={`/events/${event.id}`}>
-      <img src={event.image} alt="" />
+      <img src={optimizeImageUrl(event.image)} alt="" loading="lazy" />
 
       <div className="event-card-content">
         <p className="event-category">{event.category}</p>
